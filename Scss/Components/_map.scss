@@ -1,0 +1,15 @@
+#mapSection{
+
+    #cityLocation{
+        width:48%;
+        height: 350px;
+        float:right;
+        margin-top:20px;
+        box-shadow:inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(0,0,0,.1);
+        display:none;
+        @media all and (max-width:1090px){
+            width: 100%;
+            float:none;
+        }
+    }
+}

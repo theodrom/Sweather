@@ -1,0 +1,40 @@
+#dailySection{
+
+    #dailyUl{
+        width: 48%;
+        margin:5px 0;
+        float:left;
+        @media all and (max-width:1090px){
+            width: 100%;
+            float:none;
+        }
+
+        li{
+            border-bottom: 1px solid lightgray;
+            text-align: center;
+            padding: 0 3px;
+
+            &>span{
+                float:left;
+                position:relative;
+                top:16px;
+            }
+
+            .maxMinWrapper{
+                display: inline-block;
+                width:60px;
+                float: right;
+                position:relative;
+                top:16px;
+
+                span:first-child{
+                    float:left;
+                }
+
+                span:last-child{
+                    float:right;
+                }
+            }
+        }
+    }
+}
