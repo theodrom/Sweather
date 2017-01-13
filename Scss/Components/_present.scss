@@ -1,0 +1,24 @@
+#headSection {
+    display: none;
+    #cityName-holder {
+
+    }
+
+
+    #nowInfo{
+
+        div{
+            padding:8px 3px;
+
+            &:first-child{
+                border-bottom: 1px solid lightgray;
+                font-size: 1.1em;
+            }
+
+            span{
+                line-height: 24px;
+            }
+        }
+        
+    }
+}

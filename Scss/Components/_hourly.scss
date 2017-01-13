@@ -1,0 +1,18 @@
+#hourlySection {
+    width: auto;
+    height: 130px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    white-space: nowrap;
+    border-bottom: 2px solid lightgray;
+    border-top: 1px solid lightgray;
+    display: none;
+    .hourInfo-holder {
+        display: inline-block;
+        width: 80px;
+        padding: 5px 0;
+        margin: 0 5px;
+        overflow-x: scroll;
+        text-align: center;
+    }
+}
