@@ -23,7 +23,7 @@
     <script src="https://use.fontawesome.com/a355225238.js"></script>
 </head>
 
-<body>
+<body class="container-flud">
     <!--[if IE]>
         <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script>
         <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script>
@@ -34,18 +34,21 @@
             <h3>Sveriges väderprognos</h3>
         </div>
     </header>
-    <main>
-        <section id="searchSection" class="form-group">
+    <main class="container-flud">
+        <section id="searchSection" class="row form-group">
             <div id="search-wrapper" class="form-inline">
                 <p>Sök en stad i Sverige</p>
                 <p>(OBS: Använd ej å, ö, ä)</p>
-                
-                <div id="suggest-Wrapper">
+
+                <div class="search-holder col-lg-12 col-md-12 col-xs-12">
                     <input type="text" id="searchInput" class="form-control">
-                    <button id="searchBtn" type="button" class="btn btn-md btn-info">Kör</button>
-                    <ul id="suggestionsUl">
-                        
-                    </ul>
+                    <span id="searchBtn" class="fa fa-search"></span>
+                    
+                    <div id="suggest-Wrapper">
+                        <ul id="suggestionsUl">
+
+                        </ul>
+                    </div>
                 </div>
             </div>
         </section>
@@ -64,7 +67,7 @@
                     <span id="curDay"></span> <span id="curDate"></span> <span id="curMonth"></span>
                 </div>
                 <div>
-                    <span id="curText"></span> 
+                    <span id="curText"></span>
                 </div>
             </div>
         </section>
@@ -75,14 +78,14 @@
 
         <section id="dailySection" class="weather-section">
             <ul id="dailyUl">
-                
+
             </ul>
         </section>
         <section id="mapSection" class="weather-section">
             <div id="cityLocation">
-                
+
             </div>
-            
+
         </section>
     </main>
     <footer>
@@ -93,7 +96,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
         crossorigin="anonymous"></script>
     <script type="text/javascript" src="Js/weather.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsODDimVJfwfPLKMWNH6BhKkUAH2hxUyM&callback=myCityMap"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsODDimVJfwfPLKMWNH6BhKkUAH2hxUyM&callback=myCityMap"></script>-->
 </body>
 
 </html>

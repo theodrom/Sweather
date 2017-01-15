@@ -64,7 +64,7 @@ $(window).on('load', function () {
         ln = cityResp.longitude
         // inserts the current city name
         city.text(qName)
-        // place the mapHolder display before the googleMap call
+        //** place the mapHolder display before the googleMap call**
         mapHolder.style.display = 'block'
 
         // call the functions with the above parameters
@@ -136,7 +136,14 @@ function tenDaysWeather (q) {
   })
 }
 
-// *********** Google map function ***********
+// *********** Google map call and function ***********
+
+$.ajax({
+  url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBsODDimVJfwfPLKMWNH6BhKkUAH2hxUyM&callback=?",
+  dataType: 'jsonp',
+  jsonpCallback: 'myCityMap',
+})
+
 function myCityMap (lat, lon) {
   var mapOptions = {
     center: new google.maps.LatLng(lat, lon),
