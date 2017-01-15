@@ -193,3 +193,9 @@ $('#searchBtn').on('click', function () {
   tenDaysWeather(q)
   myCityMap(lat, lon)
 })
+
+
+// *********** Other scripts ***********
+  var d = new Date(),
+      y = "- " + d.getFullYear();
+document.getElementById("dateYear").innerHTML = y;
