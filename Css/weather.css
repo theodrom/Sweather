@@ -44,6 +44,8 @@
 
 #headSection {
   display: none; }
+  #headSection #cityName-holder #cityName {
+    text-transform: capitalize; }
   #headSection #nowInfo div {
     padding: 8px 3px; }
     #headSection #nowInfo div:first-child {
@@ -165,6 +167,17 @@ footer {
   footer div {
     border-top: 1px solid gray;
     padding-top: 8px; }
+
+#modal {
+  overflow: auto;
+  background-color: transparent;
+  margin: 5px auto;
+  width: 160px;
+  height: 32px; }
+  #modal .loader {
+    position: relative;
+    transition: 0.3s;
+    display: none; }
 
 * {
   margin: 0;

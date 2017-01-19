@@ -43,3 +43,18 @@ footer{
         padding-top:8px;
     }
 }
+
+#modal{
+    overflow: auto;
+    background-color: rgba(0,0,0,0);
+    margin:5px auto;
+    width:160px;
+    height: 32px;
+
+    .loader{
+        position:relative;
+        transition:0.3s;
+        display:none;
+    }
+
+}
