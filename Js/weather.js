@@ -12,7 +12,7 @@ var inpt = document.querySelector('#searchInput'),
 
 // *********** The search function ***********   
 
-// The input event is fired when the value of an <input> element is changed
+// The input event is triggered when the value of an <input> element is changed
 inpt.addEventListener('input', function () {
   let cityName = inpt.value,
     hit = '',
@@ -23,39 +23,45 @@ inpt.addEventListener('input', function () {
     empty = ''
   }
 
-  // xhr request for city suggestions
-  var req = new XMLHttpRequest(),
-    content = function () {
-      if (req.readyState === 4 && req.status === 200) {
-        var resp = JSON.parse(req.response)
-        // if input has a value
-        if (cityName.length != 0 && hit != null) {
-          sugg.style.display = 'block'
+ var url = 'http://autocomplete.wunderground.com/aq?query=' + cityName + '&c=SE&cities=' + empty + '&cb=?'
+  $.ajax({ 
+      url: url, 
+      dataType: "jsonp", 
+      crossDomain: true,
+      success: function (resp){ 
 
-          for (var i = 0; i < resp.RESULTS.length; i++) {
-            // split the result, because it is of type 'city, Sweden'
-            hit += '<li class="hit">' + resp.RESULTS[i].name.split(',', 1) + '</li>'
-            lat = resp.RESULTS[i].lat
-            lon = resp.RESULTS[i].lon
-            q = resp.RESULTS[i].name.split(',', 1)
+      if (cityName.length != 0 && hit != null) {
+            sugg.style.display = 'block'
+
+            for (var i = 0; i < resp.RESULTS.length; i++) {
+              // split the result, because it is of type 'city, Sweden'
+              hit += '<li class="hit" data-lat="' + resp.RESULTS[i].lat + '" data-lon="' + resp.RESULTS[i].lon + '">' + resp.RESULTS[i].name.split(',', 1) + '</li>'
+            }
+            // empty the container on every call
+            sugg.innerHTML = ''
+            sugg.innerHTML = hit
+          }else {
+            sugg.style.display = 'none'
           }
-          // empty the container on every call
-          sugg.innerHTML = ''
-          sugg.innerHTML = hit
-        }else {
-          sugg.style.display = 'none'
-        }
-      }
-  }
-  req.onreadystatechange = content
-  req.open('GET', 'http://autocomplete.wunderground.com/aq?query=' + cityName + '&c=SE&cities=' + empty, true)
-  req.send()
+    }
+  })
 })
+
 
 // *********** Get current location function ***********
 $(window).on('load', function () {
   var cityReq = new XMLHttpRequest(),
     content = function () {
+
+// if(cityReq.readyState < 4){
+//   $(".loader").show('fast')
+//   $("#searchInput").attr('disabled', 'disabled')
+// }
+// else{
+//   $(".loader").hide('fast')
+//   $("#searchInput").removeAttr('disabled')
+// }
+
       if (cityReq.readyState === 4 && cityReq.status === 200) {
         var cityResp = JSON.parse(cityReq.response),
         // the responses
@@ -141,7 +147,7 @@ function tenDaysWeather (q) {
 $.ajax({
   url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBsODDimVJfwfPLKMWNH6BhKkUAH2hxUyM&callback=?",
   dataType: 'jsonp',
-  jsonpCallback: 'myCityMap',
+  jsonpCallback: 'myCityMap'
 })
 
 function myCityMap (lat, lon) {
@@ -158,44 +164,63 @@ function myCityMap (lat, lon) {
 }
 
 // *********** Click on hit function ***********
-$('#suggestionsUl').on('click', '.hit', function () {
+$('#suggestionsUl').on('click', '.hit', function (e) {
   // uses a parent element to fire the event on dynamicly created element
-  $(this).each(function () {
-    inpt.value = $(this).text()
-    // changes the values with the city name
-    city.text($(this).text())
 
+    inpt.value = $(e.target).text()
+    // changes the values with the city name
+    city.text($(e.target).text())
+    
+    //DOM manipulation
     sugg.style.display = 'none'
     headSection.style.display = 'block'
     hourlySection.style.display = 'block'
     mapHolder.style.display = 'block'
-    // the 'this' has already the same value from above
-    q = city.text()
 
-    // calls to the functions
+    // the event target element text
+    q = $(e.target).text()
+
+    // calls to functions
     hourlyWeather(q)
     tenDaysWeather(q)
+
+    // the event target element data
+    lat = $(e.target).data("lat")
+    lon = $(e.target).data("lon")
     myCityMap(lat, lon)
-  })
+
 })
 
-// *********** Click on button function ***********
-$('#searchBtn').on('click', function () {
-  sugg.style.display = 'none'
-  headSection.style.display = 'block'
-  hourlySection.style.display = 'block'
-  mapHolder.style.display = 'block'
-  q = inpt.value
-  city.text(q)
+// // *********** Click on button function ***********
+// $('#searchBtn').on('click', function () {
+//   //DOM manipulation
+//   sugg.style.display = 'none'
+//   headSection.style.display = 'block'
+//   hourlySection.style.display = 'block'
+//   mapHolder.style.display = 'block'
+//   q = inpt.value
+//   city.text(q).css('text-transform','capitalize')
+  
 
-  // calls to the functions
-  hourlyWeather(q)
-  tenDaysWeather(q)
-  myCityMap(lat, lon)
-})
+//   // calls to the functions
+//   hourlyWeather(q)
+//   tenDaysWeather(q)
 
 
-// *********** Other scripts ***********
+//   myCityMap(lat, lon)
+// })
+
+
+// *********** Show the year ***********
   var d = new Date(),
       y = "- " + d.getFullYear();
 document.getElementById("dateYear").innerHTML = y;
+
+
+// *********** Global function on every ajax call ***********
+$(document).ajaxStart(function() {
+  $(".loader").show('slow')
+})
+.ajaxComplete(function () {  
+  $(".loader").hide('slow')
+})
