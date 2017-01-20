@@ -2,6 +2,7 @@
 //
 'use strict'
 
+//dom and new variables
 var inpt = document.querySelector('#searchInput'),
   sugg = document.querySelector('#suggestionsUl'),
   headSection = document.querySelector('#headSection'),
@@ -14,7 +15,7 @@ var inpt = document.querySelector('#searchInput'),
 
 // The input event is triggered when the value of an <input> element is changed
 inpt.addEventListener('input', function () {
-  let cityName = inpt.value,
+  var cityName = inpt.value,
     hit = '',
 
     // var to remove cities from results, cities=0
@@ -23,54 +24,51 @@ inpt.addEventListener('input', function () {
     empty = ''
   }
 
- var url = 'http://autocomplete.wunderground.com/aq?query=' + cityName + '&c=SE&cities=' + empty + '&cb=?'
-  $.ajax({ 
-      url: url, 
-      dataType: "jsonp", 
-      crossDomain: true,
-      success: function (resp){ 
-
+  //call to api with callback function. The data we get are already a parsed json string
+  var url = 'http://autocomplete.wunderground.com/aq?query=' + cityName + '&c=SE&cities=' + empty + '&cb=?'
+  $.ajax({
+    url: url,
+    dataType: 'jsonp',
+    crossDomain: true,
+    success: function (resp) {
       if (cityName.length != 0 && hit != null) {
-            sugg.style.display = 'block'
+        
+        //if no results where found
+        if(resp.RESULTS.length == 0){
+          sugg.style.display = 'none'
+          return false
+        }
+        //show the container
+        sugg.style.display = 'block'
 
-            for (var i = 0; i < resp.RESULTS.length; i++) {
-              // split the result, because it is of type 'city, Sweden'
-              hit += '<li class="hit" data-lat="' + resp.RESULTS[i].lat + '" data-lon="' + resp.RESULTS[i].lon + '">' + resp.RESULTS[i].name.split(',', 1) + '</li>'
-            }
-            // empty the container on every call
-            sugg.innerHTML = ''
-            sugg.innerHTML = hit
-          }else {
-            sugg.style.display = 'none'
-          }
+        for (var i = 0; i < resp.RESULTS.length; i++) {
+          // split the result, because it is of type 'city, Sweden'
+          hit += '<li class="hit" data-lat="' + resp.RESULTS[i].lat + '" data-lon="' + resp.RESULTS[i].lon + '">' + resp.RESULTS[i].name.split(',', 1) + '</li>'
+        }
+        // empty the container on every call
+        sugg.innerHTML = ''
+        sugg.innerHTML = hit
+      }
+      else {
+        sugg.style.display = 'none'
+      }
     }
   })
 })
-
 
 // *********** Get current location function ***********
 $(window).on('load', function () {
   var cityReq = new XMLHttpRequest(),
     content = function () {
-
-// if(cityReq.readyState < 4){
-//   $(".loader").show('fast')
-//   $("#searchInput").attr('disabled', 'disabled')
-// }
-// else{
-//   $(".loader").hide('fast')
-//   $("#searchInput").removeAttr('disabled')
-// }
-
       if (cityReq.readyState === 4 && cityReq.status === 200) {
         var cityResp = JSON.parse(cityReq.response),
-        // the responses
-        qName = cityResp.cityName
+          // the responses
+          qName = cityResp.cityName
         lt = cityResp.latitude
         ln = cityResp.longitude
         // inserts the current city name
         city.text(qName)
-        //** place the mapHolder display before the googleMap call**
+        // ** place the mapHolder display before the googleMap call**
         mapHolder.style.display = 'block'
 
         // call the functions with the above parameters
@@ -91,7 +89,7 @@ $(window).on('load', function () {
 function hourlyWeather (q) {
   // xhr call for every city in Sweden
   $.getJSON('http://api.wunderground.com/api/4c0fff77b0215157/hourly/lang:SW/q/Sweden/' + q + '.json', function (data) {
-    //gets data from the index 0 for the present hour
+    // gets data from the index 0 for the present hour
     var fc = data.hourly_forecast[0]
     $('#weatherIcon').attr('src', fc.icon_url)
     $('#curCondition').html(fc.condition)
@@ -101,7 +99,7 @@ function hourlyWeather (q) {
     $('#curMonth').html(fc.FCTTIME.month_name)
     $('#curHighestTemp').html(fc.dewpoint.metric + '°')
 
-    //gets data from the other indexes
+    // gets data from the other indexes
     var e = ''
     for (var i = 0; i < 25; i++) {
       var fcIn = data.hourly_forecast[i]
@@ -129,7 +127,7 @@ function tenDaysWeather (q) {
     $('#curText').text(data.forecast.txt_forecast.forecastday[0].fcttext_metric)
     var d = ''
     for (var i = 1; i < 8; i++) {
-      let fc = data.forecast.simpleforecast.forecastday[i]
+      var fc = data.forecast.simpleforecast.forecastday[i]
       d += '<li>'
       d += '<span>' + fc.date.weekday + '</span>'
       d += '<img src="' + fc.icon_url + '" alt="' + fc.icon + '">'
@@ -145,7 +143,7 @@ function tenDaysWeather (q) {
 // *********** Google map call and function ***********
 
 $.ajax({
-  url: "https://maps.googleapis.com/maps/api/js?key=AIzaSyBsODDimVJfwfPLKMWNH6BhKkUAH2hxUyM&callback=?",
+  url: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyBsODDimVJfwfPLKMWNH6BhKkUAH2hxUyM&callback=?',
   dataType: 'jsonp',
   jsonpCallback: 'myCityMap'
 })
@@ -167,60 +165,78 @@ function myCityMap (lat, lon) {
 $('#suggestionsUl').on('click', '.hit', function (e) {
   // uses a parent element to fire the event on dynamicly created element
 
-    inpt.value = $(e.target).text()
-    // changes the values with the city name
-    city.text($(e.target).text())
-    
-    //DOM manipulation
-    sugg.style.display = 'none'
-    headSection.style.display = 'block'
-    hourlySection.style.display = 'block'
-    mapHolder.style.display = 'block'
+  inpt.value = $(e.target).text()
+  // changes the values with the city name
+  city.text($(e.target).text())
 
-    // the event target element text
-    q = $(e.target).text()
+  // DOM manipulation
+  sugg.style.display = 'none'
 
-    // calls to functions
-    hourlyWeather(q)
-    tenDaysWeather(q)
+  // the event target element text
+  q = $(e.target).text()
 
-    // the event target element data
-    lat = $(e.target).data("lat")
-    lon = $(e.target).data("lon")
-    myCityMap(lat, lon)
+  // calls to functions
+  hourlyWeather(q)
+  tenDaysWeather(q)
 
+  // the event target element data
+  lat = $(e.target).data('lat')
+  lon = $(e.target).data('lon')
+  myCityMap(lat, lon)
 })
 
-// // *********** Click on button function ***********
-// $('#searchBtn').on('click', function () {
-//   //DOM manipulation
-//   sugg.style.display = 'none'
-//   headSection.style.display = 'block'
-//   hourlySection.style.display = 'block'
-//   mapHolder.style.display = 'block'
-//   q = inpt.value
-//   city.text(q).css('text-transform','capitalize')
-  
+// *********** Click on search-button function ***********
+$('#searchBtn').on('click', function () {
+  // DOM manipulation
+  sugg.style.display = 'none'
 
-//   // calls to the functions
-//   hourlyWeather(q)
-//   tenDaysWeather(q)
+  q = inpt.value
 
+  var url = 'http://autocomplete.wunderground.com/aq?query=' + q + '&c=SE&cities=&cb=?'
+  $.ajax({
+    url: url,
+    dataType: 'jsonp',
+    crossDomain: true,
+    success: function (resp) {
+      var cityInfo = []
 
-//   myCityMap(lat, lon)
-// })
+      for (var i = 0; i < resp.RESULTS.length; i++) {
+        var cityHit = resp.RESULTS[i].name.split(',', 1)
+        cityInfo.push(cityHit[0], resp.RESULTS[i].lat, resp.RESULTS[i].lon)
+      }
+      for (var y = 0; y < cityInfo.length; y += 3) {
+        var cityArr = cityInfo.slice(y, y + 3)
+        var c = cityArr
+        if ((q.toLowerCase()) == (c[0].toLowerCase())) {
+          lat = c[1]
+          lon = c[2]
+          city.text(c[0])
 
+          // empty the container on every call
+          sugg.innerHTML = ''
+
+          // calls to the functions
+          hourlyWeather(q)
+          tenDaysWeather(q)
+          myCityMap(lat, lon)
+          break
+        }else {
+          sugg.innerHTML = ''
+        }
+      }
+    }
+  })
+})
 
 // *********** Show the year ***********
-  var d = new Date(),
-      y = "- " + d.getFullYear();
-document.getElementById("dateYear").innerHTML = y;
-
+var d = new Date(),
+  y = '- ' + d.getFullYear()
+document.getElementById('dateYear').innerHTML = y
 
 // *********** Global function on every ajax call ***********
-$(document).ajaxStart(function() {
-  $(".loader").show('slow')
+$(document).ajaxStart(function () {
+  $('.loader').show('slow')
 })
-.ajaxComplete(function () {  
-  $(".loader").hide('slow')
-})
+  .ajaxStop(function () {
+    $('.loader').hide('slow')
+  })
