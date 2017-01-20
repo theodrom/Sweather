@@ -149,11 +149,13 @@ $.ajax({
 })
 
 function myCityMap (lat, lon) {
+  //show the map
   var mapOptions = {
     center: new google.maps.LatLng(lat, lon),
     zoom: 10,
     mapTypeId: google.maps.MapTypeId.HYBRID
   }
+  //show the marker
   var map = new google.maps.Map(mapHolder, mapOptions),
     marker = new google.maps.Marker({
       position: mapOptions.center
@@ -198,15 +200,20 @@ $('#searchBtn').on('click', function () {
     dataType: 'jsonp',
     crossDomain: true,
     success: function (resp) {
-      var cityInfo = []
 
+      var cityInfo = []
+      //takes the results and pusses them to an empty array
       for (var i = 0; i < resp.RESULTS.length; i++) {
         var cityHit = resp.RESULTS[i].name.split(',', 1)
         cityInfo.push(cityHit[0], resp.RESULTS[i].lat, resp.RESULTS[i].lon)
       }
+
+      
       for (var y = 0; y < cityInfo.length; y += 3) {
+        //slices the array in groups of three elements
         var cityArr = cityInfo.slice(y, y + 3)
         var c = cityArr
+        //compares the 0 value of every 'sliced' array... 
         if ((q.toLowerCase()) == (c[0].toLowerCase())) {
           lat = c[1]
           lon = c[2]
@@ -219,8 +226,10 @@ $('#searchBtn').on('click', function () {
           hourlyWeather(q)
           tenDaysWeather(q)
           myCityMap(lat, lon)
+          //if the city name is equal it breakes the loop
           break
-        }else {
+        }
+        else {
           sugg.innerHTML = ''
         }
       }
@@ -234,9 +243,11 @@ var d = new Date(),
 document.getElementById('dateYear').innerHTML = y
 
 // *********** Global function on every ajax call ***********
+//on every ajax call the loader shows up
 $(document).ajaxStart(function () {
   $('.loader').show('slow')
 })
+//when the call stops the loader hides
   .ajaxStop(function () {
     $('.loader').hide('slow')
   })
