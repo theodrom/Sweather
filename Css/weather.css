@@ -107,27 +107,35 @@
 
 header {
   border-bottom: 1px solid lightgray; }
+  @media all and (max-width: 767px) {
+    header h1 {
+      font-size: 1.5em; } }
   header h3 {
     width: 60%;
     margin: 0 auto 10px;
     line-height: 32px; }
+    @media all and (max-width: 767px) {
+      header h3 {
+        font-size: 1em;
+        margin: 0 auto 4px; } }
 
 @font-face {
   font: gillsans;
-  font-family: url("../Resaurces/Fonts/GillSans.ttc"); }
+  font-family: url("../Resaurce/Fonts/GillSans.ttc"); }
 
 @font-face {
   font: gillsans-light;
-  font-family: url("../Resaurces/Fonts/gillsans-light.ttf"); }
+  font-family: url("../Resaurce/Fonts/gillsans-light.ttf"); }
 
 @font-face {
   font: helvetica-light;
-  font-family: url("../../Resaurces/Fonts/HelveticaNeue-UltraLight.otf"); }
+  font-family: url("../Resaurce/Fonts/HelveticaNeue-UltraLight.otf"); }
 
 main, header, footer {
   width: 60%;
   margin: 10px auto;
-  padding: 10px; }
+  padding: 10px;
+  font-family: gillsans-light; }
   @media all and (max-width: 767px) {
     main, header, footer {
       width: 100%; } }
@@ -174,6 +182,10 @@ footer {
   margin: 5px auto;
   width: 160px;
   height: 32px; }
+  @media all and (max-width: 767px) {
+    #modal {
+      height: 20px;
+      width: 110px; } }
   #modal .loader {
     position: relative;
     transition: 0.3s;

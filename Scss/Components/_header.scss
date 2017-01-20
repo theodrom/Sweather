@@ -2,13 +2,18 @@ header{
     border-bottom: 1px solid lightgray;
     
     h1{
-
+        @media all and (max-width:767px){
+            font-size:1.5em;
+        }
     }
 
-    h3{
-         
+    h3{  
         width: 60%; 
         margin: 0 auto 10px; 
         line-height:32px;
+        @media all and (max-width:767px){
+            font-size:1em;
+            margin: 0 auto 4px; 
+        }
     }
 }
