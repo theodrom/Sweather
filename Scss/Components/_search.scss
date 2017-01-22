@@ -1,4 +1,6 @@
 #searchSection{
+    margin:0;
+    /*----------_Navbar_------------*/
 
     #search-wrapper{
         text-align: center;
@@ -11,6 +13,7 @@
 
         .search-holder{
             float: none;
+            padding: 0;
 
             input{
                 max-width:170px;

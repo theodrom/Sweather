@@ -1,0 +1,40 @@
+@import "../Helpers/_baseHelper.scss";
+
+.navbar{
+    margin-bottom: 10px;;
+}
+
+.navbar-default{
+    border: none;
+    background-color: $noColor;
+    
+    .navbar-header{
+        float:left;
+        @media all and (min-width: 768px){
+            
+        }
+
+        .navbar-toggle{
+            border: none;
+            @media all and (min-width: 768px){
+                
+            }
+        }
+    }
+
+    .navbar-collapse{
+        border: none;
+
+        .navbar-nav{
+
+            .menuName{
+                padding:10px !important;
+                cursor:pointer;
+                color:dimgray;
+                &:hover{
+                    color: gray;
+                }
+            }
+        }
+    }
+}
