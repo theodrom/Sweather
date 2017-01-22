@@ -25,12 +25,19 @@
     .navbar-collapse{
         border: none;
 
-        .navbar-nav{
-
+        .nav.navbar-nav{
+            @media all and (min-width: 768px){
+                
+            }
+            
             .menuName{
                 padding:10px !important;
                 cursor:pointer;
                 color:dimgray;
+                @media all and (min-width: 768px){
+                    display: inline-block;
+                    float:none;
+                }
                 &:hover{
                     color: gray;
                 }

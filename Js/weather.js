@@ -269,7 +269,7 @@ document.getElementById('dateYear').innerHTML = y
 $(document).ajaxStart(function () {
   $('.loader').show('slow')
 })
-  // when the all the requests have complete, the loader hides
+  // when all the requests have complete, the loader hides
   .ajaxSuccess(function () {
     $('.loader').hide('slow')
   })
