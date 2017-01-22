@@ -17,13 +17,14 @@ The styling of the app was meant to be simple but effective also. Due to the pur
 
 ####Ajax calls – APIs
 -	The app sends XMLHttpRequest(xhr) calls to five different APIs.
-i. When it loads, the first request is sent to the http://api.ipinfodb.com/v3 api. The response is a json string with info based on the client’s IP number. The name of the city and the latitude and longitude are sent as parameters
 
-ii. to the second api http://api.wunderground.com/api/hourly/ which responds with a json string of the hourly weather forecast of the chosen city,
+i. When it loads, the first request is sent to the http://api.ipinfodb.com/v3/ . The response is a json string with info based on the client’s IP number. The name of the city and the latitude and longitude are sent as parameters to
 
-iii. to the third api http://api.wunderground.com/api/forecast10day/ which responds with a json string including a 10day forecast weather forecast and
+ii. the second api http://api.wunderground.com/api/hourly/ which responds with a json string of the hourly weather forecast of the chosen city,
 
-iv. to the fourth api https://maps.googleapis.com/maps/api/ which responds with a jsonp callback function from googlemaps. 
+iii. the third api http://api.wunderground.com/api/forecast10day/ which responds with a json string including a 10day weather forecast and
+
+iv. the fourth api https://maps.googleapis.com/maps/api/ which responds with a jsonp callback function from googlemaps. 
 
 To pass the SOP, all the above APIs need a user key to respond back.
 
@@ -41,5 +42,5 @@ linkedIn: https://www.linkedin.com/in/theo-matskas-40600b32
 
 ####ToDo list – Buggs
 - The next step is to make the menu dynamic with favorite cities a user saves. This needs a database and a multiuser control.
-- The apps biggest problem is the language. It must be found a way all the words on the screen would be in Swedish.
+- The app's biggest problem is the language. It must be found a way all the words on the screen would be in Swedish.
 - A problem appears also on cities which have the same name i.e. Lund.
