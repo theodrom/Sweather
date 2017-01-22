@@ -44,3 +44,4 @@ linkedIn: https://www.linkedin.com/in/theo-matskas-40600b32
 - The next step is to make the menu dynamic with favorite cities a user saves. This needs a database and a multiuser control.
 - The app's biggest problem is the language. It must be found a way all the words on the screen would be in Swedish.
 - A problem appears also on cities which have the same name i.e. Lund.
+- Create an exception when the response lacks of info i.e. Umea.
