@@ -2,6 +2,7 @@ header{
     border-bottom: 1px solid lightgray;
     
     h1{
+        margin-top:10px;
         @media all and (max-width:767px){
             font-size:1.5em;
         }
@@ -15,5 +16,24 @@ header{
             font-size:1em;
             margin: 0 auto 4px; 
         }
+    }
+
+    #modal{
+        overflow: auto;
+        background-color: rgba(0,0,0,0);
+        margin:5px auto;
+        width:160px;
+        height: 32px;
+        @media all and (max-width:767px){
+                height: 20px;
+                width:110px;
+            }
+
+        .loader{
+            position:relative;
+            transition:0.3s;
+            display:none;
+        }
+
     }
 }

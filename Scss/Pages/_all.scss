@@ -1,7 +1,7 @@
 
 
 main,header,footer {
-    width: 60%;
+    width: 70%;
     margin: 10px auto;
     padding: 10px;
     font-family: gillsans-light;
@@ -45,21 +45,3 @@ footer{
     }
 }
 
-#modal{
-    overflow: auto;
-    background-color: rgba(0,0,0,0);
-    margin:5px auto;
-    width:160px;
-    height: 32px;
-    @media all and (max-width:767px){
-            height: 20px;
-            width:110px;
-        }
-
-    .loader{
-        position:relative;
-        transition:0.3s;
-        display:none;
-    }
-
-}
